@@ -1,8 +1,9 @@
-from yaramo.topology import Topology
-from yaramo.node import Node
 from yaramo.edge import Edge
+from yaramo.node import Node
+from yaramo.topology import Topology
 
 from track_signal_generator.generator import TrackSignalGenerator
+
 
 def setup() -> Topology:
     node1 = Node()
