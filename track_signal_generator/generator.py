@@ -1,3 +1,8 @@
+"""
+A generator for yaramo which generates missing track signals ("Blocksignale")
+on edges and around switches.
+"""
+
 from yaramo.edge import Edge
 from yaramo.signal import Signal, SignalDirection, SignalFunction, SignalKind
 from yaramo.topology import Topology
@@ -18,8 +23,8 @@ class TrackSignalGenerator:
         pass
 
     def _place_signals_on_edge(self, edge: Edge):
-        for km in range(0, int(edge.length), DISTANCE_BEETWEEN_TRACK_SIGNALS):
-            self._place_signal_on_edge(edge, km)
+        for track_meter in range(0, int(edge.length), DISTANCE_BEETWEEN_TRACK_SIGNALS):
+            self._place_signal_on_edge(edge, track_meter)
 
     def _place_signal_on_edge(self, edge: Edge, signal_km=0):
         signal = Signal(
