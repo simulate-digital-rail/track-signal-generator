@@ -4,10 +4,12 @@ on edges and around switches.
 """
 
 from yaramo.edge import Edge
+from yaramo.node import Node
 from yaramo.signal import Signal, SignalDirection, SignalFunction, SignalKind
 from yaramo.topology import Topology
 
 DISTANCE_BEETWEEN_TRACK_SIGNALS = 500
+DISTANCE_TO_SWITCH = 10
 
 
 class TrackSignalGenerator:
@@ -20,8 +22,11 @@ class TrackSignalGenerator:
     def __init__(self, topology: Topology):
         self.topology = topology
 
-    def _place_signals_for_switch(self, node):
-        pass
+    def _place_signals_for_switch(self, node: Node):
+        for edge in self.topology.edges:
+            # We found our incomming edge
+            if edge.node_b == node:
+                self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH)
 
     def _place_signals_on_edge(self, edge: Edge):
         for track_meter in range(
@@ -54,3 +59,7 @@ class TrackSignalGenerator:
         """
         Performs the signal placement around switches
         """
+        nodes = self.topology.nodes
+
+        for node in filter(lambda node: node.is_switch(), nodes.values()):
+            self._place_signals_for_switch(node)
