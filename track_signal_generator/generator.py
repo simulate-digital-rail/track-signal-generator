@@ -23,7 +23,7 @@ class TrackSignalGenerator:
         self.topology = topology
 
     def _place_signals_for_switch(self, node: Node):
-        for edge in self.topology.edges:
+        for edge in self.topology.edges.values():
             # We found our incomming edge
             if edge.node_b == node:
                 self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH)
