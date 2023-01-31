@@ -12,6 +12,16 @@ DISTANCE_BEETWEEN_TRACK_SIGNALS = 500
 DISTANCE_TO_SWITCH = 10
 
 
+def workaround(self) -> bool:
+    """
+    Returns true if this node is a switch.
+    A switch is defined as a `Node` with a 2 connected tracks
+    """
+    return len(self.connected_nodes) >= 2
+
+Node.is_switch = workaround
+
+
 class TrackSignalGenerator:
     """
     Generates track-signals ("Blocksignale") for the given topology by walking
