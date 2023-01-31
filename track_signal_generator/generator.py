@@ -9,11 +9,12 @@ from yaramo.topology import Topology
 
 DISTANCE_BEETWEEN_TRACK_SIGNALS = 500
 
+
 class TrackSignalGenerator:
     """
-        Generates track-signals ("Blocksignale") for the given topology by walking
-        the edges and placing signals every `DISTANCE_BEETWEEN_TRACK_SIGNALS`m apart.
-        Additionally, signals around switches are placed.
+    Generates track-signals ("Blocksignale") for the given topology by walking
+    the edges and placing signals every `DISTANCE_BEETWEEN_TRACK_SIGNALS`m apart.
+    Additionally, signals around switches are placed.
     """
 
     def __init__(self, topology: Topology):
@@ -23,7 +24,9 @@ class TrackSignalGenerator:
         pass
 
     def _place_signals_on_edge(self, edge: Edge):
-        for track_meter in range(1, int(edge.length), DISTANCE_BEETWEEN_TRACK_SIGNALS):
+        for track_meter in range(
+            1, int(edge.length), DISTANCE_BEETWEEN_TRACK_SIGNALS
+        ):  # we start at 1 as otherwise sumo gets confused and adds a steep turn
             self._place_signal_on_edge(edge, track_meter)
 
     def _place_signal_on_edge(self, edge: Edge, signal_km=0):
@@ -40,7 +43,7 @@ class TrackSignalGenerator:
 
     def place_edge_signals(self):
         """
-            Performs the signal placement along the edges
+        Performs the signal placement along the edges
         """
         edges = self.topology.edges
 
@@ -49,5 +52,5 @@ class TrackSignalGenerator:
 
     def place_switch_signals(self):
         """
-            Performs the signal placement around switches
+        Performs the signal placement around switches
         """

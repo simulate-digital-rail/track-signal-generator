@@ -14,7 +14,7 @@ def setup() -> Topology:
     node1.geo_node = DbrefGeoNode(0, 10)
     node2.geo_node = DbrefGeoNode(1002, 10)
 
-    edge = Edge(node1, node2, length = 1002)
+    edge = Edge(node1, node2, length=1002)
 
     node1.set_connection_head(node2)
 
@@ -25,7 +25,8 @@ def setup() -> Topology:
 
     return topology
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     topology = setup()
 
     topology.name = "track-signal-generator"

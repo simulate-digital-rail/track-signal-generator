@@ -9,7 +9,7 @@ def setup() -> Topology:
     node1 = Node()
     node2 = Node()
 
-    edge = Edge(node1, node2, length = 10_000)
+    edge = Edge(node1, node2, length=10_000)
 
     node1.set_connection_head(node2)
 
@@ -19,6 +19,7 @@ def setup() -> Topology:
     topology.add_edge(edge)
 
     return topology
+
 
 def test_straight_track():
     topology = setup()
