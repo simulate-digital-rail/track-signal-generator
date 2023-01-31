@@ -1,11 +1,6 @@
-from yaramo.signal import (
-    Signal,
-    SignalKind,
-    SignalDirection,
-    SignalFunction,
-)
-from yaramo.topology import Topology
 from yaramo.edge import Edge
+from yaramo.signal import Signal, SignalDirection, SignalFunction, SignalKind
+from yaramo.topology import Topology
 
 DISTANCE_BEETWEEN_TRACK_SIGNALS = 500
 
