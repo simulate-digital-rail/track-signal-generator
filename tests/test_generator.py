@@ -1,28 +1,17 @@
-from yaramo.edge import Edge
-from yaramo.node import Node
-from yaramo.topology import Topology
-
 from track_signal_generator.generator import TrackSignalGenerator
 
-
-def setup() -> Topology:
-    node1 = Node()
-    node2 = Node()
-
-    edge = Edge(node1, node2, length=10_000)
-
-    node1.set_connection_head(node2)
-
-    topology = Topology()
-    topology.add_node(node1)
-    topology.add_node(node2)
-    topology.add_edge(edge)
-
-    return topology
+from pickle import load
 
 
 def test_straight_track():
-    topology = setup()
+    topology = load(open("tests/topologies/straight_track.pickle", "rb"))
 
     TrackSignalGenerator(topology).place_edge_signals()
     assert len(topology.signals.keys()) == 20
+
+
+def test_switch_simple():
+    topology = load(open("tests/topologies/switch_simple.pickle", "rb"))
+
+    TrackSignalGenerator(topology).place_switch_signals()
+    assert len(topology.signals.keys()) == 3
