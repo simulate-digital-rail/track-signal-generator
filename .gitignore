@@ -143,6 +143,13 @@ venv.bak/
 /site
 
 # mypy
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
 .mypy_cache/
 .dmypy.json
 dmypy.json
@@ -174,3 +181,6 @@ poetry.toml
 
 # vscode folders
 .vscode
+
+# sumo export
+sumo-config

@@ -410,6 +410,25 @@ tomli = ">=1.0.0"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
+name = "sumoexporter"
+version = "2.0.0"
+description = "An exporter to a SUMO scenario from a yaramo model"
+category = "dev"
+optional = false
+python-versions = "^3.10"
+files = []
+develop = false
+
+[package.dependencies]
+yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
+
+[package.source]
+type = "git"
+url = "https://github.com/simulate-digital-rail/sumo-exporter"
+reference = "HEAD"
+resolved_reference = "8eb9f4b037c71555ca9e4a2cde0ab039ad16f078"
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -541,4 +560,4 @@ resolved_reference = "26ba7b29ea2e0f991bf0f9681eac39411f3279eb"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "221c26f8579078edc143b5d0f1acb2bf32d324f822d76920783078f5785a4f22"
+content-hash = "d690451befdec7e4edbffa4c74d03b46dbace5938c431ae4f5e66b264c75e0fc"

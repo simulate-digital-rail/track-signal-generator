@@ -20,6 +20,7 @@ yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
 optional = true
 
 [tool.poetry.group.example.dependencies]
+sumoexporter = {git = "https://github.com/simulate-digital-rail/sumo-exporter"}
 
 [tool.pytest.ini_options]
 addopts = [

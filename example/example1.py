@@ -1,4 +1,6 @@
+from sumoexporter import SUMOExporter
 from yaramo.edge import Edge
+from yaramo.geo_node import DbrefGeoNode
 from yaramo.node import Node
 from yaramo.topology import Topology
 
@@ -9,7 +11,10 @@ def setup() -> Topology:
     node1 = Node()
     node2 = Node()
 
-    edge = Edge(node1, node2, length=10_000)
+    node1.geo_node = DbrefGeoNode(0, 10)
+    node2.geo_node = DbrefGeoNode(1002, 10)
+
+    edge = Edge(node1, node2, length=1002)
 
     node1.set_connection_head(node2)
 
@@ -21,8 +26,13 @@ def setup() -> Topology:
     return topology
 
 
-def test_straight_track():
+if __name__ == "__main__":
     topology = setup()
 
+    topology.name = "track-signal-generator"
+
     TrackSignalGenerator(topology).place_edge_signals()
-    assert len(topology.signals.keys()) == 20
+
+    sumo_exporter = SUMOExporter(topology)
+    sumo_exporter.convert()
+    sumo_exporter.write_output()
