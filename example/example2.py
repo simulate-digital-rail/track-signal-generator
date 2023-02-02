@@ -26,6 +26,10 @@ def setup() -> Topology:
     switch.set_connection_head(node2)
     switch.set_connection_left(node3)
 
+    switch.connected_nodes.append(node1)
+    node2.connected_nodes.append(switch)
+    node3.connected_nodes.append(switch)
+
     topology = Topology()
     topology.add_node(node1)
     topology.add_node(switch)
