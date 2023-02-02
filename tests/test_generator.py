@@ -1,6 +1,6 @@
-from track_signal_generator.generator import TrackSignalGenerator
-
 from pickle import load
+
+from track_signal_generator.generator import TrackSignalGenerator
 
 
 def test_straight_track():

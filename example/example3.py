@@ -1,3 +1,4 @@
+from railwayroutegenerator.routegenerator import RouteGenerator
 from sumoexporter import SUMOExporter
 from yaramo.edge import Edge
 from yaramo.geo_node import DbrefGeoNode
@@ -5,7 +6,6 @@ from yaramo.node import Node
 from yaramo.topology import Topology
 
 from track_signal_generator.generator import TrackSignalGenerator
-from railwayroutegenerator.routegenerator import RouteGenerator
 
 
 def setup() -> Topology:

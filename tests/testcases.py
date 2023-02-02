@@ -1,9 +1,9 @@
+from pickle import dump
+
 from yaramo.edge import Edge
 from yaramo.geo_node import DbrefGeoNode
 from yaramo.node import Node
 from yaramo.topology import Topology
-
-from pickle import dump
 
 
 def straight_track() -> None:
