@@ -21,6 +21,8 @@ optional = true
 
 [tool.poetry.group.example.dependencies]
 sumoexporter = {git = "https://github.com/simulate-digital-rail/sumo-exporter"}
+railway-route-generator = {git = "https://github.com/simulate-digital-rail/railway-route-generator"}
+planpro-importer = {git = "https://github.com/simulate-digital-rail/planpro-importer"}
 
 [tool.pytest.ini_options]
 addopts = [
