@@ -56,6 +56,7 @@ def switch_simple() -> None:
 
     dump(topology, open("topologies/switch_simple.pickle", "wb"))
 
+
 def intermediary_node():
     node1 = Node()
     node2 = Node()

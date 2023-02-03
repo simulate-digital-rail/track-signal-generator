@@ -48,17 +48,25 @@ class TrackSignalGenerator:
     def _calculate_distance_from_start(self, node: Node, edge: Edge) -> int:
         if node.is_switch():
             return DISTANCE_BEETWEEN_TRACK_SIGNALS
-        elif len(node.connected_nodes) == 2: # "straight" track
-            previous_node = next(filter(lambda x: edge.get_other_node(node) != x, node.connected_nodes)) # we can do this because we have only two connected nodes
+        if len(node.connected_nodes) == 2:  # "straight" track
+            previous_node = next(
+                filter(lambda x: edge.get_other_node(node) != x, node.connected_nodes)
+            )  # we can do this because we have only two connected nodes
             previous_edge = self.topology.get_edge_by_nodes(previous_node, node)
-            
-            if previous_edge:
-                direction = previous_edge.get_direction_based_on_nodes(previous_node, node)
 
-                last_signal = previous_edge.get_signals_with_direction_in_order(direction)[-1]
+            if previous_edge:
+                direction = previous_edge.get_direction_based_on_nodes(
+                    previous_node, node
+                )
+
+                last_signal = previous_edge.get_signals_with_direction_in_order(
+                    direction
+                )[-1]
 
                 if direction == SignalDirection.IN:
-                    distance_from_node = previous_edge.length - last_signal.distance_edge
+                    distance_from_node = (
+                        previous_edge.length - last_signal.distance_edge
+                    )
                 else:
                     distance_from_node = last_signal.distance_edge
 

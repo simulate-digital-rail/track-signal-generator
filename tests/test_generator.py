@@ -26,6 +26,7 @@ def test_switch_both():
 
     assert len(topology.signals.keys()) == 3
 
+
 def test_intermediary_node():
     topology = load(open("tests/topologies/intermediary_node.pickle", "rb"))
 
