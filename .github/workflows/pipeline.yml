@@ -27,7 +27,7 @@ jobs:
       run: poetry install
     - name: check format with black
       run: |
-        poetry run black --diff .
+        poetry run black --check .
     - name: check import order with isort
       run: |
         poetry run isort -c .
