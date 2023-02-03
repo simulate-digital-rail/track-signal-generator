@@ -25,3 +25,11 @@ def test_switch_both():
     tsg.place_edge_signals()
 
     assert len(topology.signals.keys()) == 3
+
+def test_intermediary_node():
+    topology = load(open("tests/topologies/intermediary_node.pickle", "rb"))
+
+    TrackSignalGenerator(topology).place_edge_signals()
+
+    assert len(topology.signals.keys()) == 2
+    # TODO: Assert that the signal is properly spaced from the node
