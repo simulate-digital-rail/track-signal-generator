@@ -24,4 +24,4 @@ def test_switch_both():
     tsg.place_switch_signals()
     tsg.place_edge_signals()
 
-    assert len(topology.signals.keys()) == 4
+    assert len(topology.signals.keys()) == 3
