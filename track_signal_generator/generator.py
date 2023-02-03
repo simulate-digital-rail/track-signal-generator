@@ -46,8 +46,11 @@ class TrackSignalGenerator:
                 )
 
     def _place_signals_on_edge(self, edge: Edge):
+        first_signal = (
+            1 if not edge.node_a.is_switch() else DISTANCE_BEETWEEN_TRACK_SIGNALS
+        )
         for track_meter in range(
-            1, int(edge.length), DISTANCE_BEETWEEN_TRACK_SIGNALS
+            first_signal, int(edge.length), DISTANCE_BEETWEEN_TRACK_SIGNALS
         ):  # we start at 1 as otherwise sumo gets confused and adds a steep turn
             self._place_signal_on_edge(edge, track_meter)
 
