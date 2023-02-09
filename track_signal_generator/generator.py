@@ -107,7 +107,12 @@ class TrackSignalGenerator:
         for track_meter in range(
             first_signal, last_signal, DISTANCE_BEETWEEN_TRACK_SIGNALS
         ):  # we start at 1 as otherwise sumo gets confused and adds a steep turn
-            self._place_signal_on_edge(edge, track_meter)
+            self._place_two_way_signal_on_ege(edge, track_meter)
+
+    def _place_two_way_signal_on_ege(self, edge: Edge, signal_km=0) -> None:
+        self._place_signal_on_edge(edge, signal_km)
+        self._place_signal_on_edge(edge, signal_km, direction=SignalDirection.GEGEN)
+    
 
     def _place_signal_on_edge(
         self, edge: Edge, signal_km=0, direction=SignalDirection.IN
