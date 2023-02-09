@@ -8,8 +8,9 @@ from yaramo.node import Node
 from yaramo.signal import Signal, SignalDirection, SignalFunction, SignalKind
 from yaramo.topology import Topology
 
-DISTANCE_BEETWEEN_TRACK_SIGNALS = 500
-DISTANCE_TO_SWITCH = 10
+DISTANCE_BEETWEEN_TRACK_SIGNALS = 1000
+DISTANCE_TO_SWITCH = 25
+DISTANCE_BETWEEN_SWITCHES = 100
 
 
 def workaround(self) -> bool:
