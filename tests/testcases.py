@@ -67,7 +67,7 @@ def intermediary_node():
     node3.geo_node = DbrefGeoNode(1000, 10)
 
     edge1 = Edge(node1, node2, length=50)
-    edge2 = Edge(node2, node3, length=950)
+    edge2 = Edge(node2, node3, length=952)
 
     node1.set_connection_head(node2)
     node2.set_connection_head(node3)
