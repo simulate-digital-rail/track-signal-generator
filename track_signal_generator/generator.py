@@ -112,7 +112,6 @@ class TrackSignalGenerator:
     def _place_two_way_signal_on_ege(self, edge: Edge, signal_km=0) -> None:
         self._place_signal_on_edge(edge, signal_km)
         self._place_signal_on_edge(edge, signal_km, direction=SignalDirection.GEGEN)
-    
 
     def _place_signal_on_edge(
         self, edge: Edge, signal_km=0, direction=SignalDirection.IN
