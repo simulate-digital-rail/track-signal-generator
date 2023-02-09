@@ -66,10 +66,15 @@ class TrackSignalGenerator:
                     previous_node, node
                 )
 
-                last_signal = previous_edge.get_signals_with_direction_in_order(
+                last_signals = previous_edge.get_signals_with_direction_in_order(
                     direction
-                )[-1]
+                )
 
+                if len(last_signals) == 0:
+                    return 1
+                
+                last_signal = last_signals[-1]
+                
                 if direction == SignalDirection.IN:
                     distance_from_node = (
                         previous_edge.length - last_signal.distance_edge
