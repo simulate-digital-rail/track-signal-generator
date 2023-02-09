@@ -47,7 +47,9 @@ if __name__ == "__main__":
 
     topology.name = "example2"
 
-    TrackSignalGenerator(topology).place_switch_signals()
+    tsg = TrackSignalGenerator(topology)
+    tsg.place_switch_signals()
+    tsg.place_edge_signals()
 
     sumo_exporter = SUMOExporter(topology)
     sumo_exporter.convert()
