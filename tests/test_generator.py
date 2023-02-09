@@ -7,7 +7,7 @@ def test_straight_track():
     topology = load(open("tests/topologies/straight_track.pickle", "rb"))
 
     TrackSignalGenerator(topology).place_edge_signals()
-    assert len(topology.signals.keys()) == 20
+    assert len(topology.signals.keys()) == 10
 
 
 def test_switch_simple():
