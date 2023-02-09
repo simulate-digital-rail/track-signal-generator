@@ -45,7 +45,7 @@ def setup() -> Topology:
 if __name__ == "__main__":
     topology = setup()
 
-    topology.name = "track-signal-generator"
+    topology.name = "example2"
 
     TrackSignalGenerator(topology).place_switch_signals()
 

@@ -5,7 +5,7 @@ from track_signal_generator.generator import TrackSignalGenerator
 
 if __name__ == "__main__":
     topology = PlanProReader("lausitz simple.ppxml").read_topology_from_plan_pro_file()
-    topology.name = "lausitz-simple"
+    topology.name = "example4"
 
     # topology.name = "track-signal-generator"
     TrackSignalGenerator(topology).place_edge_signals()

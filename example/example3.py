@@ -53,7 +53,7 @@ def setup() -> Topology:
 if __name__ == "__main__":
     topology = setup()
 
-    topology.name = "track-signal-generator-advanced"
+    topology.name = "example3"
 
     tsg = TrackSignalGenerator(topology)
 
