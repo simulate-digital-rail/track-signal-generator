@@ -7,7 +7,7 @@ def test_straight_track():
     topology = load(open("tests/topologies/straight_track.pickle", "rb"))
 
     TrackSignalGenerator(topology).place_edge_signals()
-    assert len(topology.signals.keys()) == 10
+    assert len(topology.signals.keys()) == 20
 
 
 def test_switch_simple():
@@ -32,5 +32,5 @@ def test_intermediary_node():
 
     TrackSignalGenerator(topology).place_edge_signals()
 
-    assert len(topology.signals.keys()) == 2
+    assert len(topology.signals.keys()) == 4
     # TODO: Assert that the signal is properly spaced from the node
