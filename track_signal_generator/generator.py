@@ -61,7 +61,7 @@ class TrackSignalGenerator:
             )  # we can do this because we have only two connected nodes
             previous_edge = self.topology.get_edge_by_nodes(previous_node, node)
 
-            if previous_edge:
+            if previous_edge and len(previous_edge.signals) > 0:
                 direction = previous_edge.get_direction_based_on_nodes(
                     previous_node, node
                 )
