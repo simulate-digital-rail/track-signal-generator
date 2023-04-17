@@ -14,7 +14,7 @@ pytest = "7.1.2"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
+yaramo = {git = "https://github.com/antonykamp/yaramo", branch="refactor/replace-connected-nodes-with-edges"}
 
 [tool.poetry.group.example]
 optional = true
