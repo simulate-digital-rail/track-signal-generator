@@ -29,7 +29,7 @@ def setup() -> Topology:
 if __name__ == "__main__":
     topology = setup()
 
-    topology.name = "track-signal-generator"
+    topology.name = "example1"
 
     TrackSignalGenerator(topology).place_edge_signals()
 
