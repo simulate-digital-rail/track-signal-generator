@@ -14,15 +14,15 @@ pytest = "7.1.2"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
+yaramo = {git = "https://github.com/bp2022-ap1/yaramo", branch="refactor/replace-connected-nodes-with-edges"}
 
 [tool.poetry.group.example]
 optional = true
 
 [tool.poetry.group.example.dependencies]
-sumoexporter = {git = "https://github.com/simulate-digital-rail/sumo-exporter"}
-railway-route-generator = {git = "https://github.com/simulate-digital-rail/railway-route-generator"}
-planpro-importer = {git = "https://github.com/simulate-digital-rail/planpro-importer"}
+sumoexporter = {git = "https://github.com/bp2022-ap1/sumo-exporter", branch="refactor/replace-connected-nodes-edges"}
+railway-route-generator = {git = "https://github.com/bp2022-ap1/railway-route-generator", branch="refactor/replace-connected-nodes-edges"}
+planpro-importer = {git = "https://github.com/bp2022-ap1/planpro-importer", branch="refactor/replace-connected-nodes-edges"}
 
 [tool.pytest.ini_options]
 addopts = [

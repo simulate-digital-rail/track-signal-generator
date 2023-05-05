@@ -12,7 +12,7 @@ def straight_track() -> None:
 
     edge = Edge(node1, node2, length=10_000)
 
-    node1.set_connection_head(node2)
+    node1.set_connection_head_edge(edge)
 
     topology = Topology()
     topology.add_node(node1)
@@ -37,13 +37,13 @@ def switch_simple() -> None:
     edge2 = Edge(switch, node2, length=50)
     edge3 = Edge(switch, node3, length=50)
 
-    node1.set_connection_head(switch)
-    switch.set_connection_head(node2)
-    switch.set_connection_left(node3)
+    node1.set_connection_head_edge(edge1)
+    switch.set_connection_head_edge(edge2)
+    switch.set_connection_left_edge(edge3)
 
-    switch.connected_nodes.append(node1)
-    node2.connected_nodes.append(switch)
-    node3.connected_nodes.append(switch)
+    switch.connected_edges.append(edge1)
+    node2.connected_edges.append(edge2)
+    node3.connected_edges.append(edge3)
 
     topology = Topology()
     topology.add_node(node1)
