@@ -12,7 +12,7 @@ def straight_track() -> None:
 
     edge = Edge(node1, node2, length=10_000)
 
-    node1.set_connection_head(node2)
+    node1.set_connection_head_edge(edge)
 
     topology = Topology()
     topology.add_node(node1)
@@ -37,13 +37,13 @@ def switch_simple() -> None:
     edge2 = Edge(switch, node2, length=50)
     edge3 = Edge(switch, node3, length=50)
 
-    node1.set_connection_head(switch)
-    switch.set_connection_head(node2)
-    switch.set_connection_left(node3)
+    node1.set_connection_head_edge(edge1)
+    switch.set_connection_head_edge(edge2)
+    switch.set_connection_left_edge(edge3)
 
-    switch.connected_nodes.append(node1)
-    node2.connected_nodes.append(switch)
-    node3.connected_nodes.append(switch)
+    switch.connected_edges.append(edge1)
+    node2.connected_edges.append(edge2)
+    node3.connected_edges.append(edge3)
 
     topology = Topology()
     topology.add_node(node1)
@@ -57,6 +57,35 @@ def switch_simple() -> None:
     dump(topology, open("topologies/switch_simple.pickle", "wb"))
 
 
+def intermediary_node():
+    node1 = Node()
+    node2 = Node()
+    node3 = Node()
+
+    node1.geo_node = DbrefGeoNode(0, 10)
+    node2.geo_node = DbrefGeoNode(50, 10)
+    node3.geo_node = DbrefGeoNode(1000, 10)
+
+    edge1 = Edge(node1, node2, length=50)
+    edge2 = Edge(node2, node3, length=952)
+
+    node1.set_connection_head(node2)
+    node2.set_connection_head(node3)
+
+    node2.connected_nodes.append(node1)
+    node3.connected_nodes.append(node2)
+
+    topology = Topology()
+    topology.add_node(node1)
+    topology.add_node(node2)
+    topology.add_node(node3)
+    topology.add_edge(edge1)
+    topology.add_edge(edge2)
+
+    dump(topology, open("topologies/intermediary_node.pickle", "wb"))
+
+
 if __name__ == "__main__":
     straight_track()
     switch_simple()
+    intermediary_node()
