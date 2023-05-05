@@ -35,10 +35,8 @@ class TrackSignalGenerator:
         self.topology = topology
 
     def _place_signals_for_switch(self, node: Node):
-        for connected_node in node.connected_nodes:
-            edge = self.topology.get_edge_by_nodes(node, connected_node)
-
-            # We found our incomming edge
+        for edge in node.connected_edges:
+            # We found an incomming edge
             if edge.node_b == node:
                 # don't place signals between switches
                 if (
@@ -50,7 +48,7 @@ class TrackSignalGenerator:
                 ):
                     self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH)
 
-            # We found a outgoing edge
+            # We found an outgoing edge
             if edge.node_a == node:
                 # don't place signals between switches
                 if (
@@ -67,34 +65,6 @@ class TrackSignalGenerator:
     def _calculate_distance_from_start(self, node: Node, edge: Edge) -> int:
         if node.is_switch():
             return DISTANCE_BEETWEEN_TRACK_SIGNALS
-        if len(node.connected_nodes) == 2:  # "straight" track
-            previous_node = next(
-                filter(lambda x: edge.get_other_node(node) != x, node.connected_nodes)
-            )  # we can do this because we have only two connected nodes
-            previous_edge = self.topology.get_edge_by_nodes(previous_node, node)
-
-            if previous_edge and len(previous_edge.signals) > 0:
-                direction = previous_edge.get_direction_based_on_nodes(
-                    previous_node, node
-                )
-
-                last_signals = previous_edge.get_signals_with_direction_in_order(
-                    direction
-                )
-
-                if len(last_signals) == 0:
-                    return 1
-
-                last_signal = last_signals[-1]
-
-                if direction == SignalDirection.IN:
-                    distance_from_node = (
-                        previous_edge.length - last_signal.distance_edge
-                    )
-                else:
-                    distance_from_node = last_signal.distance_edge
-
-                return DISTANCE_BEETWEEN_TRACK_SIGNALS - distance_from_node
         return 1
 
     def _place_signals_on_edge(self, edge: Edge):
@@ -123,7 +93,7 @@ class TrackSignalGenerator:
             SignalFunction.Block_Signal,
             SignalKind.Hauptsignal,
         )
-        signal.name = f"{edge.uuid}-km-{signal_km}"
+        signal.name = f"{edge.uuid}-km-{signal_km}-{direction}"
         self.topology.add_signal(signal)
         edge.signals.append(signal)
 
