@@ -81,8 +81,8 @@ class TrackSignalGenerator:
             self._place_two_way_signal_on_ege(edge, track_meter)
 
     def _place_two_way_signal_on_ege(self, edge: Edge, signal_km=0) -> None:
-        self._place_signal_on_edge(edge, signal_km + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2)
-        self._place_signal_on_edge(edge, signal_km - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2, direction=SignalDirection.GEGEN)
+        self._place_signal_on_edge(edge, min(edge.length - 5, signal_km + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2))
+        self._place_signal_on_edge(edge, max(5, signal_km - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2), direction=SignalDirection.GEGEN)
 
     def _place_signal_on_edge(
         self, edge: Edge, signal_km=0, direction=SignalDirection.IN
