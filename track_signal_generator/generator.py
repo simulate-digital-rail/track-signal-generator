@@ -11,6 +11,7 @@ from yaramo.topology import Topology
 DISTANCE_BEETWEEN_TRACK_SIGNALS = 1000
 DISTANCE_TO_SWITCH = 25
 DISTANCE_BETWEEN_SWITCHES = 100
+DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS = 20
 
 
 def workaround(self) -> bool:
@@ -80,8 +81,8 @@ class TrackSignalGenerator:
             self._place_two_way_signal_on_ege(edge, track_meter)
 
     def _place_two_way_signal_on_ege(self, edge: Edge, signal_km=0) -> None:
-        self._place_signal_on_edge(edge, signal_km)
-        self._place_signal_on_edge(edge, signal_km, direction=SignalDirection.GEGEN)
+        self._place_signal_on_edge(edge, signal_km + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2)
+        self._place_signal_on_edge(edge, signal_km - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2, direction=SignalDirection.GEGEN)
 
     def _place_signal_on_edge(
         self, edge: Edge, signal_km=0, direction=SignalDirection.IN
