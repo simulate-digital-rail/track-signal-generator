@@ -51,9 +51,11 @@ class TrackSignalGenerator:
                     )
                     and edge.length - DISTANCE_TO_SWITCH > 0
                 ):
-                    self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH)
                     if self._split_signals:
-                        self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS, direction=SignalDirection.GEGEN)
+                        self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS)
+                        self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH, direction=SignalDirection.GEGEN)
+                    else:
+                        self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH)
 
             # We found an outgoing edge
             if edge.node_a == node:
@@ -65,11 +67,15 @@ class TrackSignalGenerator:
                     )
                     and edge.length > DISTANCE_TO_SWITCH
                 ):
-                    self._place_signal_on_edge(
-                        edge, DISTANCE_TO_SWITCH, direction=SignalDirection.GEGEN
-                    )
                     if self._split_signals:
-                        self._place_signal_on_edge(edge, DISTANCE_TO_SWITCH + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS)
+                        self._place_signal_on_edge(
+                            edge, DISTANCE_TO_SWITCH + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS, direction=SignalDirection.GEGEN
+                        )
+                        self._place_signal_on_edge(edge, DISTANCE_TO_SWITCH)
+                    else:
+                        self._place_signal_on_edge(
+                            edge, DISTANCE_TO_SWITCH, direction=SignalDirection.GEGEN
+                        )
 
     def _calculate_distance_from_start(self, node: Node, edge: Edge) -> int:
         if node.is_switch():
@@ -90,8 +96,8 @@ class TrackSignalGenerator:
 
     def _place_two_way_signal_on_ege(self, edge: Edge, signal_km=0) -> None:
         if self._split_signals:
-            self._place_signal_on_edge(edge, min(edge.length - 5, signal_km + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2))
-            self._place_signal_on_edge(edge, max(5, signal_km - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2), direction=SignalDirection.GEGEN)
+            self._place_signal_on_edge(edge, min(edge.length - 5, signal_km + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2), direction=SignalDirection.GEGEN)
+            self._place_signal_on_edge(edge, max(5, signal_km - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2))
         else:
             self._place_signal_on_edge(edge, signal_km)
             self._place_signal_on_edge(edge, signal_km, direction=SignalDirection.GEGEN)
