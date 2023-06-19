@@ -40,6 +40,8 @@ class TrackSignalGenerator:
         self._split_signals = split_signals
 
     def _place_signals_for_switch(self, node: Node):
+        distance = (DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS + DISTANCE_TO_SWITCH) * 2 + DISTANCE_BETWEEN_SWITCHES if self._split_signals else DISTANCE_BETWEEN_SWITCHES
+
         for edge in node.connected_edges:
             # We found an incomming edge
             if edge.node_b == node:
@@ -47,7 +49,7 @@ class TrackSignalGenerator:
                 if (
                     not (
                         edge.node_a.is_switch()
-                        and edge.length < DISTANCE_BETWEEN_SWITCHES
+                        and edge.length < distance
                     )
                     and edge.length - DISTANCE_TO_SWITCH > 0
                 ):
@@ -63,7 +65,7 @@ class TrackSignalGenerator:
                 if (
                     not (
                         edge.node_b.is_switch()
-                        and edge.length < DISTANCE_BETWEEN_SWITCHES
+                        and edge.length < distance
                     )
                     and edge.length > DISTANCE_TO_SWITCH
                 ):
