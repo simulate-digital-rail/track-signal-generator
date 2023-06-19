@@ -16,7 +16,7 @@ def setup() -> Topology:
 
     edge = Edge(node1, node2, length=1002)
 
-    node1.set_connection_head(node2)
+    node1.set_connection_head_edge(edge)
 
     topology = Topology()
     topology.add_node(node1)
@@ -29,7 +29,7 @@ def setup() -> Topology:
 if __name__ == "__main__":
     topology = setup()
 
-    topology.name = "track-signal-generator"
+    topology.name = "example1"
 
     TrackSignalGenerator(topology).place_edge_signals()
 

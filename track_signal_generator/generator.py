@@ -8,8 +8,10 @@ from yaramo.node import Node
 from yaramo.signal import Signal, SignalDirection, SignalFunction, SignalKind
 from yaramo.topology import Topology
 
-DISTANCE_BEETWEEN_TRACK_SIGNALS = 500
-DISTANCE_TO_SWITCH = 10
+DISTANCE_BEETWEEN_TRACK_SIGNALS = 1000
+DISTANCE_TO_SWITCH = 25
+DISTANCE_BETWEEN_SWITCHES = 100
+DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS = 20
 
 
 def workaround(self) -> bool:
@@ -30,29 +32,77 @@ class TrackSignalGenerator:
     Additionally, signals around switches are placed.
     """
 
-    def __init__(self, topology: Topology):
+    def __init__(self, topology: Topology, split_signals=False):
+        """
+            :param split_signals: Should the signals be split to different positions
+        """
         self.topology = topology
+        self._split_signals = split_signals
 
     def _place_signals_for_switch(self, node: Node):
-        for edge in self.topology.edges.values():
-            # We found our incomming edge
-            if edge.node_b == node:
-                self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH)
+        distance = (DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS + DISTANCE_TO_SWITCH) * 2 + DISTANCE_BETWEEN_SWITCHES if self._split_signals else DISTANCE_BETWEEN_SWITCHES
 
-            # We found the outgoing edge
+        for edge in node.connected_edges:
+            # We found an incomming edge
+            if edge.node_b == node:
+                # don't place signals between switches
+                if (
+                    not (
+                        edge.node_a.is_switch()
+                        and edge.length < distance
+                    )
+                    and edge.length - DISTANCE_TO_SWITCH > 0
+                ):
+                    if self._split_signals:
+                        self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS)
+                        self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH, direction=SignalDirection.GEGEN)
+                    else:
+                        self._place_signal_on_edge(edge, edge.length - DISTANCE_TO_SWITCH)
+
+            # We found an outgoing edge
             if edge.node_a == node:
-                self._place_signal_on_edge(
-                    edge, DISTANCE_TO_SWITCH, direction=SignalDirection.GEGEN
-                )
+                # don't place signals between switches
+                if (
+                    not (
+                        edge.node_b.is_switch()
+                        and edge.length < distance
+                    )
+                    and edge.length > DISTANCE_TO_SWITCH
+                ):
+                    if self._split_signals:
+                        self._place_signal_on_edge(
+                            edge, DISTANCE_TO_SWITCH + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS, direction=SignalDirection.GEGEN
+                        )
+                        self._place_signal_on_edge(edge, DISTANCE_TO_SWITCH)
+                    else:
+                        self._place_signal_on_edge(
+                            edge, DISTANCE_TO_SWITCH, direction=SignalDirection.GEGEN
+                        )
+
+    def _calculate_distance_from_start(self, node: Node, edge: Edge) -> int:
+        if node.is_switch():
+            return DISTANCE_BEETWEEN_TRACK_SIGNALS
+        return 1
 
     def _place_signals_on_edge(self, edge: Edge):
-        first_signal = (
-            1 if not edge.node_a.is_switch() else DISTANCE_BEETWEEN_TRACK_SIGNALS
+        first_signal = self._calculate_distance_from_start(edge.node_a, edge)
+        last_signal = (
+            int(edge.length)
+            if not edge.node_b.is_switch()
+            else int(edge.length) - DISTANCE_BEETWEEN_TRACK_SIGNALS
         )
         for track_meter in range(
-            first_signal, int(edge.length), DISTANCE_BEETWEEN_TRACK_SIGNALS
+            first_signal, last_signal, DISTANCE_BEETWEEN_TRACK_SIGNALS
         ):  # we start at 1 as otherwise sumo gets confused and adds a steep turn
-            self._place_signal_on_edge(edge, track_meter)
+            self._place_two_way_signal_on_ege(edge, track_meter)
+
+    def _place_two_way_signal_on_ege(self, edge: Edge, signal_km=0) -> None:
+        if self._split_signals:
+            self._place_signal_on_edge(edge, min(edge.length - 5, signal_km + DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2), direction=SignalDirection.GEGEN)
+            self._place_signal_on_edge(edge, max(5, signal_km - DISTANCE_BETWEEN_BIDIRECTIONAL_SIGNALS / 2))
+        else:
+            self._place_signal_on_edge(edge, signal_km)
+            self._place_signal_on_edge(edge, signal_km, direction=SignalDirection.GEGEN)
 
     def _place_signal_on_edge(
         self, edge: Edge, signal_km=0, direction=SignalDirection.IN
@@ -64,7 +114,7 @@ class TrackSignalGenerator:
             SignalFunction.Block_Signal,
             SignalKind.Hauptsignal,
         )
-        signal.name = f"{edge.uuid}-km-{signal_km}"
+        signal.name = f"{edge.uuid}-km-{signal_km}-{direction}"
         self.topology.add_signal(signal)
         edge.signals.append(signal)
 
